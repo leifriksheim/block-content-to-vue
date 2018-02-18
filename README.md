@@ -20,8 +20,8 @@ Include the script file, then install the component with `Vue.use(BlockContent);
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/block-content-to-vue"></script>
-<script type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/block-content-to-vue"></script>
+<script>
   Vue.use(BlockContent);
 </script>
 ```

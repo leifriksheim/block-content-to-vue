@@ -114,7 +114,7 @@ const query = `*[_type == "post"] {
 `
 
 const serializer = {
-  'quote': Quote,
+  'heading': Heading,
   'button': Button,
 }
 

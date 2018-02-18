@@ -1,6 +1,6 @@
 # block-content-to-vue
 
-Dynamically render Vue.js components from Sanity.
+Dynamically render Vue.js components from [Sanity](https://www.sanity.io/).
 
 ## Installation
 
@@ -11,7 +11,7 @@ npm i --save block-content-to-vue
 ### Import as module
 
 ```js
-import BlockContentToVue from 'block-content-to-vue';
+import BlockContent from 'block-content-to-vue';
 ```
 
 ### Use via cdn
@@ -34,19 +34,18 @@ The component requires the props `blocks` and `serializer`.
 <block-content :blocks="blocks" :serializer="serializer" />
 ```
 
-`blocks` must be an array of content blocks from a Sanity query response.
-Example:
+`blocks` must be an array of content blocks from a Sanity query response e.g.:
 
 ```js
 [
   {
-    _id: 12345,
+    _id: 12345, // required
     _type: 'heading-block',
     heading: 'The heading!',
     subtitle: 'The subtitle'
   },
   {
-    _id: 12346,
+    _id: 12346, // required
     _type: 'two-column-block',
     leftColumn: 'Left column content',
     rightColumn: 'Right column content'
@@ -54,8 +53,7 @@ Example:
 ]
 ```
 
-`serializer` is an object describing the components you want to render based on the Sanity block's `_type` value.
-Example:
+`serializer` is an object describing the components you want to render based on the Sanity block's `_type` value e.g.:
 
 ```js
 import Heading from '@/components/Heading.vue';
@@ -92,3 +90,53 @@ export default {
 
 We can now define the props our component will receive, and we can type-check each of them.
 We can also use internal state and all the other good stuff from a regular Vue.js component.
+
+## Implementation example
+
+```html
+<template>
+  <div id="app">
+    <BlockContent :blocks="post['contentBlock']" :serializer="serializer" />
+  </div>
+</template>
+
+<script>
+import sanity from '@/sanity';
+import BlockContent from "block-content-to-vue";
+
+import Heading from "./components/heading.vue";
+import Button from './components/button.vue'
+
+const query = `*[_type == "post"] {
+  _id,
+  contentBlock
+}
+`
+
+const serializer = {
+  'quote': Quote,
+  'button': Button,
+}
+
+export default {
+  name: "App",
+  components: { BlockContent },
+  data() {
+    return {
+      post: {},
+      serializer,
+    };
+  },
+  created () {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      sanity.fetch(query).then(posts => {
+        this.post = posts[0]
+      });
+    }
+  }
+};
+</script>
+```

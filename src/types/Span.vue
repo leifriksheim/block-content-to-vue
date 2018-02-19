@@ -12,7 +12,6 @@
 <script>
 
 import Block from './Block.vue';
-import serializer from './defaultSerializer';
 
 export default {
   name: 'span-block',
@@ -25,11 +24,6 @@ export default {
   // https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
   beforeCreate: function () {
     this.$options.components.Block = require('./Block.vue').default
-  },
-  data() {
-    return {
-      serializer
-    }
   },
   computed: {
     filteredMarks() {

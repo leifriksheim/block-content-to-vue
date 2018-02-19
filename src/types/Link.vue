@@ -4,11 +4,8 @@
 
 <script>
 
-import BlockContent from '../blockcontent/index.vue';
-
 export default {
   name: 'link-block',
-  components: { BlockContent },
   props: {
     href: String,
   },

@@ -9,8 +9,7 @@
 
 <script>
 
-import BlockContent from './index.vue';
-import Block from '../primitives/Block.vue';
+import Block from './types/Block.vue';
 
 export default {
   name: 'block-content',

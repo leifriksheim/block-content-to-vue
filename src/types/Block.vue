@@ -1,111 +1,41 @@
 <template lang="html">
-  <span>
+  <div>
     <template v-for="block in children">
-
-      <Block
-        v-if="block._type === 'block'"
-        v-bind="block"
-        :key="block._key">
-      </Block>
-
-      <h1 v-if="styles === 'h1'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h1>
-
-      <h2 v-if="styles === 'h2'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h2>
-
-      <h3 v-if="styles === 'h3'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h3>
-
-      <h4 v-if="styles === 'h4'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h4>
-
-      <h5 v-if="styles === 'h5'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h5>
-
-      <h6 v-if="styles === 'h6'">
-        <component
-          :is="serializer[block._type]"
-          v-bind="block"
-          :styles="styles"
-          :markDefs="markDefs"
-          :key="block._key">
-          <slot></slot>
-        </component>
-      </h6>
-
-      <component
-        v-if="styles === 'normal'"
-        :is="serializer[block._type]"
-        v-bind="block"
-        :styles="styles"
-        :markDefs="markDefs"
-        :key="block._key">
-        <slot></slot>
-      </component>
-
+      <RenderCustomType v-if="isCustomBlock" :block="block" :serializers="serializers" :key="block._key" />
+      <RenderDefaultType v-else :block="block" :serializers="serializers" :key="block._key" />
     </template>
-  </span>
+  </div>
 </template>
 
 <script>
 
-import Block from './Block.vue';
-import serializer from '../serializer';
+import RenderCustomType from './RenderCustomType.vue';
+import RenderDefaultType from './RenderDefaultType.vue';
 
 export default {
-  name: 'block',
   props: {
-    _key: String,
+    _type: String,
     children: Array,
+    styling: String,
     markDefs: Array,
-    styles: String,
+    serializers: Object
   },
-  components: { Block },
-  data() {
-    return {
-      serializer
-    }
+  components: {
+    RenderCustomType,
+    RenderDefaultType
   },
+  methods: {
+    getMark(block) {
+      console.log('block', block);
+    },
+  },
+  computed: {
+    isCustomBlock() {
+      const defaultTypes = ['span', 'em', 'underline', 'strike-through'];
+      const serializerTypes = Object.keys(this.serializers.types);
+
+      return defaultTypes.some(type => serializerTypes.includes(type));
+    },
+  }
 }
 </script>

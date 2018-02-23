@@ -53,17 +53,24 @@ The component requires the props `blocks` and `serializer`.
 ]
 ```
 
-`serializer` is an object describing the components you want to render based on the Sanity block's `_type` value e.g.:
+`serializer` is an object describing the components you want to render based on the Sanity block's `_type` value.
+For now the serializer supports all custom types you define yourself in the schema, and the types `span`, `em`, `underline` and `strike-through`.
+The regular types like `span` receive the prop `fields` with all it's properties inside.
 
 ```js
 import Heading from '@/components/Heading.vue';
 import TwoColumn from '@/components/TwoColumn.vue';
+import Span from '@/components/Span.vue';
+import Underline from '@/components/Underline.vue';
 
 const serializer = {
   'heading-block': Heading,
-  'two-column-block': TwoColumn
+  'two-column-block': TwoColumn,
+  'span': Span,
+  'underline': Underline,
 }
 ```
+
 
 The block-content-to-vue component will automatically make the properties of each block available as props in your component.
 

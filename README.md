@@ -123,8 +123,10 @@ const query = `*[_type == "post"] {
 `
 
 const serializer = {
-  'heading': Heading,
-  'button': Button,
+  types: {
+    'heading': Heading,
+    'button': Button,
+  }
 }
 
 export default {

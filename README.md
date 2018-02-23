@@ -64,10 +64,12 @@ import Span from '@/components/Span.vue';
 import Underline from '@/components/Underline.vue';
 
 const serializer = {
-  'heading-block': Heading,
-  'two-column-block': TwoColumn,
-  'span': Span,
-  'underline': Underline,
+  types: {
+    'heading-block': Heading,
+    'two-column-block': TwoColumn,
+    'span': Span,
+    'underline': Underline,
+  }
 }
 ```
 

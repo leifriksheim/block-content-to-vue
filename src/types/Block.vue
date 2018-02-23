@@ -4,6 +4,7 @@
       v-for="block in children"
       :block="block"
       :styling="styling"
+      :serializers="serializers"
       :markDefs="getMarks(block)"
       :isCustomType="isCustomType"
       :key="block._key"

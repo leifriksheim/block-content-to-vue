@@ -45,7 +45,7 @@ export default {
     },
     renderCustomType(h) {
       const component = this.serializers.types[this.block._type];
-      return createElement(component, {
+      return h(component, {
         props: {
           fields: this.block
         }

@@ -1,6 +1,6 @@
 {
   "name": "block-content-to-vue",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Dynamically render Vue.js components from Sanity",
   "main": "dist/block-content-to-vue.js",
   "scripts": {

@@ -1,16 +1,19 @@
 <template lang="html">
-  <div>
-    <template v-for="block in children">
-      <RenderCustomType v-if="isCustomBlock" :block="block" :serializers="serializers" :key="block._key" />
-      <RenderDefaultType v-else :block="block" :serializers="serializers" :key="block._key" />
-    </template>
-  </div>
+  <p>
+    <RenderType
+      v-for="block in children"
+      :block="block"
+      :styling="styling"
+      :markDefs="getMarks(block)"
+      :isCustomType="isCustomType"
+      :key="block._key"
+    />
+  </p>
 </template>
 
 <script>
 
-import RenderCustomType from './RenderCustomType.vue';
-import RenderDefaultType from './RenderDefaultType.vue';
+import RenderType from './RenderType.vue';
 
 export default {
   props: {
@@ -21,19 +24,21 @@ export default {
     serializers: Object
   },
   components: {
-    RenderCustomType,
-    RenderDefaultType
+    RenderType
   },
   methods: {
-    getMark(block) {
-      console.log('block', block);
-    },
+    getMarks(block) {
+      // Let the render component get all associated marks
+      return this.markDefs.filter(markDef => {
+        return block.marks.some(markId => markDef._key === markId);
+      })
+    }
   },
   computed: {
-    isCustomBlock() {
+    isCustomType() {
+      // Let the render component know if the type is a custom component from serializer
       const defaultTypes = ['span', 'em', 'underline', 'strike-through'];
       const serializerTypes = Object.keys(this.serializers.types);
-
       return defaultTypes.some(type => serializerTypes.includes(type));
     },
   }

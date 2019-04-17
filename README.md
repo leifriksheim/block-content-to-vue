@@ -1,3 +1,7 @@
+
+**Depricated:** Use [sanity-block-vue-component](https://github.com/rdunk/sanity-blocks-vue-component) instead.
+
+
 # block-content-to-vue
 
 Dynamically render Vue.js components from [Sanity](https://www.sanity.io/).
